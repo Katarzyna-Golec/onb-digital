@@ -24,7 +24,7 @@ module sync_fifo #(
     // Diagnostics / occupancy
     output logic [$clog2(DEPTH):0]  occupancy
 );
-
+    logic [DATA_WIDTH-1:0] mem [0:DEPTH-1];  //RAM memory array
     // TODO:
     // 1. Declare the RAM memory array: logic [DATA_WIDTH-1:0] mem [0:DEPTH-1];
     // 2. Implement write (wr_ptr) and read (rd_ptr) pointers.
