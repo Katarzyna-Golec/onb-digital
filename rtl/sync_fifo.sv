@@ -38,7 +38,6 @@ module sync_fifo #(
     assign almost_full  = 1'b0;
     assign empty        = 1'b1;
     assign almost_empty = 1'b1;
-    assign rd_data      = '0;
     assign occupancy    = '0;
 
     always_ff @(posedge clk) begin
