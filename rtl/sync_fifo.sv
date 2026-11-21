@@ -41,4 +41,16 @@ module sync_fifo #(
     assign rd_data      = '0;
     assign occupancy    = '0;
 
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin  //reset
+            rd_ptr <= '0;
+        end
+        else begin
+            if (rd_en & !empty) begin
+                rd_data <= mem[rd_ptr]; //read the data
+                rd_ptr++;
+            end
+        end
+    end
+
 endmodule
