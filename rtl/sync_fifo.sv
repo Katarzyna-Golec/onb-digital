@@ -38,7 +38,6 @@ module sync_fifo #(
     assign almost_full  = (occupancy >= ALMOST_FULL_THRESH);
     assign empty        = (occupancy == 0);
     assign almost_empty = (occupancy <= ALMOST_EMPTY_THRESH);
-    assign occupancy    = '0;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin  //reset
