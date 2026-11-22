@@ -51,5 +51,16 @@ module sync_fifo #(
             end
         end
     end
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            wr_ptr <= '0;
+        end 
+        else begin
+            if (wr_en && !full) begin
+                mem[wr_ptr] <= wr_data;
+                wr_ptr = wr_ptr + 1'b1;
+            end
+        end
+    end
 
 endmodule
