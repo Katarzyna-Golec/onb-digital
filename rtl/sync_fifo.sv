@@ -47,7 +47,7 @@ module sync_fifo #(
         else begin
             if (rd_en && !empty) begin
                 rd_data <= mem[rd_ptr]; //read the data
-                rd_ptr++;
+                rd_ptr = rd_ptr + 1'b1;
             end
         end
     end
