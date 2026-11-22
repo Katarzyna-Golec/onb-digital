@@ -26,6 +26,8 @@ module sync_fifo #(
 );
     logic [DATA_WIDTH-1:0] mem [0:DEPTH-1];  //RAM memory array
     logic [$clog2(DEPTH):0] wr_ptr, rd_ptr;
+    logic valid_rd;
+    logic valid_wr;
     // TODO:
     // 1. Declare the RAM memory array: logic [DATA_WIDTH-1:0] mem [0:DEPTH-1];
     // 2. Implement write (wr_ptr) and read (rd_ptr) pointers.
@@ -38,28 +40,38 @@ module sync_fifo #(
     assign almost_full  = (occupancy >= ALMOST_FULL_THRESH);
     assign empty        = (occupancy == 0);
     assign almost_empty = (occupancy <= ALMOST_EMPTY_THRESH);
-
+    assign valid_rd = (rd_en && !empty);
+    assign valid_wr = (wr_en && !full);
+    //read block
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin  //reset
             rd_ptr <= '0;
         end
         else begin
-            if (rd_en && !empty) begin
+            if (valid_rd) begin
                 rd_data <= mem[rd_ptr]; //read the data
                 rd_ptr = rd_ptr + 1'b1;
             end
         end
     end
+    //write block
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            wr_ptr <= '0;
+            wr_ptr <= '0;      
         end 
         else begin
-            if (wr_en && !full) begin
+            if (valid_wr) begin
                 mem[wr_ptr] <= wr_data;
                 wr_ptr = wr_ptr + 1'b1;
             end
         end
     end
-
+    //simultaneous read and write block
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            occupancy <= '0;
+        end
+        
+    end
+  
 endmodule
