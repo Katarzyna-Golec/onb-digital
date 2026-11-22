@@ -34,9 +34,9 @@ module sync_fifo #(
     // 5. Calculate flags: empty, full, almost_empty, almost_full.
     // 6. Handle simultaneous read and write.
 
-    assign full         = 1'b0;
+    assign full         = (occupancy == DEPTH);
     assign almost_full  = 1'b0;
-    assign empty        = 1'b1;
+    assign empty        = (occupancy == 0);
     assign almost_empty = 1'b1;
     assign occupancy    = '0;
 
