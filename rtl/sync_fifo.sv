@@ -35,9 +35,9 @@ module sync_fifo #(
     // 6. Handle simultaneous read and write.
 
     assign full         = (occupancy == DEPTH);
-    assign almost_full  = 1'b0;
+    assign almost_full  = (occupancy >= ALMOST_FULL_THRESH);
     assign empty        = (occupancy == 0);
-    assign almost_empty = 1'b1;
+    assign almost_empty = (occupancy <= ALMOST_EMPTY_THRESH);
     assign occupancy    = '0;
 
     always_ff @(posedge clk or negedge rst_n) begin
