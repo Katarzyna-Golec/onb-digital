@@ -50,7 +50,7 @@ module sync_fifo #(
         else begin
             if (valid_rd) begin
                 rd_data <= mem[rd_ptr]; //read the data
-                rd_ptr = rd_ptr + 1'b1;
+                rd_ptr <= rd_ptr + 1'b1;
             end
         end
     end
@@ -62,7 +62,7 @@ module sync_fifo #(
         else begin
             if (valid_wr) begin
                 mem[wr_ptr] <= wr_data;
-                wr_ptr = wr_ptr + 1'b1;
+                wr_ptr <= wr_ptr + 1'b1;
             end
         end
     end
