@@ -71,7 +71,13 @@ module sync_fifo #(
         if (!rst_n) begin
             occupancy <= '0;
         end
-        
-    end
-  
+        else begin
+            case ({valid_rd, valid_wr}) 
+                2'b10: occupancy <= occupancy - 1'b1;  //read only
+                2'b01: occupancy <= occupancy + 1'b1;  //write only
+                default: occupancy <= occupancy;
+            endcase
+        end
+    end             
+            
 endmodule
